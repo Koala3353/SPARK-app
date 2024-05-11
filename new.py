@@ -330,14 +330,13 @@ def long_running_task(image_12):
     
 
     master = tk.Tk()
-    master.geometry("300x200")  # Set the size of the window
-
-    custom_font = font.Font(size=20)
-
+    master.geometry("600x350")  # Set the size of the window
+    master.title("Results")
+    
     # Create a Text widget
-    results_text = tk.Text(master, font=custom_font)
+    results_text = tk.Text(master, bg="#00416C", font=("Poppins Medium", 16), foreground="white")
+
     # Place the Text widget at the center
-    results_text.place(relx=0.5, rely=0.5, anchor='center')
 
     # Make sure the window stays on top
     master.attributes('-topmost', True)
@@ -395,10 +394,10 @@ def long_running_task(image_12):
                 chords_per_line = 1
         elif chords_per_line == 2 and counter % 2 != 0:
             # If chords_per_line is 2 and the counter is even, insert a space
-            results_text.insert(tk.END, ' ')
+            results_text.insert(tk.END, '    ')
 
     # Configure the red tag to change the text color to red
-    results_text.tag_config('red', foreground='red')
+    results_text.tag_config('red', foreground='#FF474C')
 
     image_12.place_forget()
 

@@ -637,8 +637,8 @@ def songs_page(window):
     player = TkinterVideo(master=canvas)
     player.load(media_path)
 
-    player.set_size((492, 277))
-    player.place(x=614, y=394)
+    player.place(x=374, y=254, width=492, height=277)
+
 
     set_player(player)
     

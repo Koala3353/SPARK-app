@@ -34,6 +34,7 @@ canvas = Canvas(
     highlightthickness = 0,
     relief = "ridge"
 )
+window.iconbitmap('./logo.ico')  # Set the window icon
 
 canvas.place(x = 0, y = 0)
 canvas.create_rectangle(
