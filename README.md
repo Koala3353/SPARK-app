@@ -35,4 +35,14 @@ To get started with the Music Learning App, simply download and install it on yo
 Happy playing! 🎶🎸🎹
 
 ## App Images
-![Image Description](image_url)
+
+### Home Screen
+![Image Description](https://github.com/Koala3353/SPARK-app/blob/main/showcase/homepage.png?raw=true)
+
+
+### Karaoke
+![Image Description](https://github.com/Koala3353/SPARK-app/blob/main/showcase/karaoke.png?raw=true)
+
+
+### Chords
+![Image Description](https://github.com/Koala3353/SPARK-app/blob/main/showcase/chords.png?raw=true)
