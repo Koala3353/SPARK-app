@@ -409,6 +409,20 @@ def chords_page(window):
         y=321.0,
         anchor="center"
     )
+    
+    image_image_13 = PhotoImage(
+        file=relative_to_assets("image_13.png")
+    )   
+    image_13 = tk.Label(
+        canvas,
+        image=image_image_13
+    )
+    image_13.place(
+        x=512.0,
+        y=321.0,
+        anchor="center"
+    )
+
 
     
     button_image_3 = PhotoImage(
@@ -418,7 +432,7 @@ def chords_page(window):
         borderwidth=0,
         highlightthickness=0,
         command=lambda: {
-            process_file_chord(image_12)
+            process_file_chord(image_12, image_13)
         },
         relief="flat"
     )
@@ -444,6 +458,7 @@ def chords_page(window):
     button_3.bind('<Enter>', button_3_hover)
     button_3.bind('<Leave>', button_3_leave)
     image_12.place_forget()
+    image_13.place_forget()
 
     window.resizable(False, False)
     window.mainloop()

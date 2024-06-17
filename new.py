@@ -29,6 +29,47 @@ print('Application Info:', app_info)
 media_path = "video/Rain Rain Go Away.mp4"
 audio_path = "audio/Rain Rain Go Away.wav"
 
+def process_audio_file_special(file_path, api_key, image_12, image_13):
+    try:
+        audio_url = client.upload_file(file_path=file_path)
+        print('File Url:', audio_url)
+        # Create Job
+        workflow_params = {
+            'inputUrl': audio_url,
+        }
+        create_job_info = client.create_job(job_name='Chords Website', workflow_id='chords-detection',
+                                            params=workflow_params)
+        job_id = create_job_info['id']
+        print('Job Created:', job_id)
+        
+        image_12.place_forget()
+        image_13.place(
+            x=512.0,
+            y=321.0,
+            anchor="center"
+        )
+
+        # Wait for job to complete
+        job_info = client.wait_for_job_completion(job_id)
+        print('Job Status:', job_info['status'])
+
+        # Get job info
+        job_info = client.get_job(job_id=job_id)
+        print('Job Status:', job_info['status'])
+
+        chords_json_url = job_info['result']['chordsJSON']
+
+        chords_json_response = requests.get(chords_json_url)
+        chords_json_response.raise_for_status()
+        chords_data = chords_json_response.json()
+
+        result = chords_data
+
+        return result
+    except Exception as e:
+        print("Error:", e)
+        
+        
 def process_audio_file(file_path, api_key):
     try:
         audio_url = client.upload_file(file_path=file_path)
@@ -77,10 +118,15 @@ def process_chordfile(json_file):
     with open(json_file, 'r') as f:
         data = json.load(f)
     if data is not None:
+        output = "N"
         for entry in data:
-            if entry['chord_simple_pop'] != "None":
-                if entry['chord_simple_pop'] != "N":
-                    return entry['chord_simple_pop']
+            print(entry['chord_simple_pop'])
+            if entry['chord_simple_pop'] != "N":
+                output = entry['chord_simple_pop']
+            elif entry['nashville_tonic'] != "N":
+                output = entry['nashville_tonic']
+        return output
+            
     else:
         print("No data in JSON file")
         return None
@@ -246,7 +292,7 @@ def process_file(image_12):
     # Run the long-running task in a separate thread
     threading.Thread(target=long_running_task, args=(image_12,)).start()
     
-def process_file_chord(image_12):
+def process_file_chord(image_12, image_13):
     image_12.place(
         x=512.0,
         y=321.0,
@@ -255,18 +301,18 @@ def process_file_chord(image_12):
     
 
     # Run the long-running task in a separate thread
-    threading.Thread(target=long_running_task_chord, args=(image_12,)).start()
+    threading.Thread(target=long_running_task_chord, args=(image_12, image_13,)).start()
 
 def disable_event():
     pass  # do nothing when the user tries to close the window
 
-def long_running_task_chord(image_12):
+def long_running_task_chord(image_12, image_13):
     # os.remove("n.json")
     # os.mkdir("n.json")
     api_key = "e1582db2-6ef0-4bb7-a1cd-f08c76125a12"
     file_path = input_entry.get()
     print(file_path)
-    result = process_audio_file(file_path, api_key)
+    result = process_audio_file_special(file_path, api_key, image_12, image_13)
     out_file = open("n.json", "w")
     json.dump(result, out_file)
     out_file.close()
@@ -293,8 +339,10 @@ def long_running_task_chord(image_12):
     # Add the "center" tag to all the text
 
     # Make sure the window stays on top
-    master.attributes('-topmost', True)
-
+    if m == "N":
+       results_text.insert(tk.END, 'Kindly reupload/rerecord your audio.', 'red')
+ 
+        
     if selected_chord == m:
         results_text.insert(tk.END, m + ' ', 'black')
         results_text.insert(tk.END, "\nCongratulations! You correctly played the chord!")
@@ -307,7 +355,7 @@ def long_running_task_chord(image_12):
     results_text.tag_config('red', foreground='#FF474C')
     results_text.tag_add("center", 1.0, "end")
 
-    image_12.place_forget()
+    image_13.place_forget()
 
     # Pack the Text widget
     results_text.pack()
@@ -318,6 +366,7 @@ def long_running_task(image_12):
     api_key = "e1582db2-6ef0-4bb7-a1cd-f08c76125a12"
     file_path = input_entry.get()
     result = process_audio_file(file_path, api_key)
+    print(result)
     out_file = open("n.json", "w")
     result_json = json.dump(result, out_file)
     print(result_json)
