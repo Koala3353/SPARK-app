@@ -30,7 +30,7 @@ This music learning app is designed for people who want to learn a musical instr
 
 ## Get Started
 
-To get started with the Music Learning App, simply download and install it on your device. Follow the on-screen instructions to create an account and start learning to play your favorite songs!
+To get started with the Music Learning App, simply download and install it on your computer. Then simply run `new.py` and make sure you have python installed on your device.
 
 Happy playing! 🎶🎸🎹
 
