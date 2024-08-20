@@ -48,4 +48,4 @@ Happy playing! 🎶🎸🎹
 ![Image Description](https://github.com/Koala3353/SPARK-app/blob/main/showcase/chords.png?raw=true)
 
 ## Last Updated
-### - May 11, 2024
+### - August 11, 2024
